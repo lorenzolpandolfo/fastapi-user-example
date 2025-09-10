@@ -128,3 +128,13 @@ docker run -p "5432:5432" -e "POSTGRES_PASSWORD=losocial" -e "POSTGRES_USER=loso
 ```bash
 pytest -vv .
 ```
+
+---
+
+## Configurações manuais
+
+Configurações feitas após o projeto gerado com o `fastapi-template`
+
+- adicionar `port` no docker-compose para rodar o banco e o projeto local
+- remoção dos `# type ignore` do `fastapi-users` para validação do `mypy`
+- criação do `.env-example`

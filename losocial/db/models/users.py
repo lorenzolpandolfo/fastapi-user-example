@@ -8,7 +8,9 @@ from fastapi_users.authentication import (
     JWTStrategy,
 )
 from fastapi_users.db import SQLAlchemyBaseUserTableUUID, SQLAlchemyUserDatabase
+from sqlalchemy import String
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import Mapped, mapped_column
 
 from losocial.db.base import Base
 from losocial.db.dependencies import get_db_session
@@ -18,17 +20,25 @@ from losocial.settings import settings
 class User(SQLAlchemyBaseUserTableUUID, Base):
     """Represents a user entity."""
 
+    teste: Mapped[str] = mapped_column(String(length=200))
+
 
 class UserRead(schemas.BaseUser[uuid.UUID]):
     """Represents a read command for a user."""
+
+    teste: str
 
 
 class UserCreate(schemas.BaseUserCreate):
     """Represents a create command for a user."""
 
+    teste: str
+
 
 class UserUpdate(schemas.BaseUserUpdate):
     """Represents an update command for a user."""
+
+    teste: str | None = None
 
 
 class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
