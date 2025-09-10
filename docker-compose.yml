@@ -1,0 +1,44 @@
+services:
+  api: &main_app
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: losocial:${LOSOCIAL_VERSION:-latest}
+    ports:
+      - "8000:8000"
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      LOSOCIAL_HOST: 0.0.0.0
+      LOSOCIAL_DB_HOST: losocial-db
+      LOSOCIAL_DB_PORT: 5432
+      LOSOCIAL_DB_USER: losocial
+      LOSOCIAL_DB_PASS: losocial
+      LOSOCIAL_DB_BASE: losocial
+
+  db:
+    image: postgres:16.3-bullseye
+    hostname: losocial-db
+    environment:
+      POSTGRES_PASSWORD: "losocial"
+      POSTGRES_USER: "losocial"
+      POSTGRES_DB: "losocial"
+    volumes:
+      - losocial-db-data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: pg_isready -U losocial
+      interval: 2s
+      timeout: 3s
+      retries: 40
+    ports:
+      - "5432:5432"
+
+
+volumes:
+  losocial-db-data:
+    name: losocial-db-data
