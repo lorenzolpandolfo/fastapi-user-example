@@ -4,8 +4,6 @@ services:
       context: .
       dockerfile: ./Dockerfile
     image: losocial:${LOSOCIAL_VERSION:-latest}
-    ports:
-      - "8000:8000"
     restart: always
     env_file:
       - .env

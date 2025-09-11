@@ -2,6 +2,61 @@
 
 This project was generated using fastapi_template.
 
+---
+
+## Setup
+Para iniciar o projeto, você deve ter as ferramentas instaladas:
+- [Python 3.17.7+](https://www.python.org/downloads/)
+- [Poetry](https://python-poetry.org/docs/#installation)
+- [Docker](https://docs.docker.com/get-docker/)
+
+Recomenda-se utilizar o Postman para testar os endpoints da API:
+- [Postman](https://www.postman.com/downloads/)
+
+Para checar o banco de dados, utilize o pgAdmin:
+- [pgAdmin 4](https://www.pgadmin.org/download/)
+
+---
+
+## Rodando o projeto
+
+Para iniciar o projeto:
+1. renomeie o arquivo `.env-example` para `.env`
+2. execute:
+    ```bash
+    poetry install
+    docker-compose -f docker-compose.yml -f deploy/docker-compose.dev.yml --project-directory . up --build
+    ```
+   
+    Caso queira evitar o build, remova a flag --build no final do comando.
+
+Feito o processo acima, no terminal deve indicar algo semelhante a:
+```
+db-1  | 2025-09-11 16:50:55.799 UTC [1] LOG:  database system is ready to accept connections
+api-1  | INFO:     Will watch for changes in these directories: ['/app/src']
+api-1  | INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+api-1  | INFO:     Started reloader process [1] using WatchFiles
+api-1  | INFO:     Started server process [8]
+api-1  | INFO:     Waiting for application startup.
+api-1  | INFO:     Application startup complete.
+```
+E agora a API vai estar rodando na porta 8000.
+
+Acesse a [Documentação do Swagger](localhost:8000/api/docs)
+
+---
+
+## Configurações manuais
+
+Configurações feitas após o projeto gerado com o `fastapi-template`:
+
+- adicionado `exclude = ["^losocial/db/models/users.py$"]` no `[tool.mypy]` do arquivo `pyproject.toml`
+- remoção da regra `D` (docstring) do `[tool.ruff.select]` no arquivo `pyproject.toml`
+- criação do `.env-example`
+- adicionada etapa de rodar testes no pre-commit
+
+---
+
 ## Poetry
 
 This project uses poetry. It's a modern dependency management
@@ -128,15 +183,3 @@ docker run -p "5432:5432" -e "POSTGRES_PASSWORD=losocial" -e "POSTGRES_USER=loso
 ```bash
 pytest -vv .
 ```
-
----
-
-## Configurações manuais
-
-Configurações feitas após o projeto gerado com o `fastapi-template`
-
-- adicionar `port` no docker-compose para rodar o banco e o projeto local
-- remoção dos `# type ignore` do `fastapi-users` para validação do `mypy`
-- criação do `.env-example`
-- remoção da regra `D` (docstring) do `[tool.ruff.select]` no arquivo `pyproject.toml`
-- adicionada etapa de rodar testes no pre-commit
