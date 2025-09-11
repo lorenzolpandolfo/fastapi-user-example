@@ -27,3 +27,10 @@ repos:
             pass_filenames: false
             args:
               - "losocial"
+
+          - id: tests
+            name: Validate tests
+            entry: poetry run pytest -vv
+            language: system
+            pass_filenames: false
+            always_run: true
