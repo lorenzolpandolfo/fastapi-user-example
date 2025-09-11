@@ -138,3 +138,4 @@ Configurações feitas após o projeto gerado com o `fastapi-template`
 - adicionar `port` no docker-compose para rodar o banco e o projeto local
 - remoção dos `# type ignore` do `fastapi-users` para validação do `mypy`
 - criação do `.env-example`
+- remoção da regra `D` (docstring) do `[tool.ruff.select]` no arquivo `pyproject.toml`

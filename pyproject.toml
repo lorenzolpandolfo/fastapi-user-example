@@ -79,7 +79,6 @@ lint.select = [
     "C90", # McCabe complexity
     "I",   # Isort
     "N",   # pep8-naming
-    "D",   # Pydocstyle
     "ANN", # Pytype annotations
     "S",   # Bandit
     "B",   # Bugbear

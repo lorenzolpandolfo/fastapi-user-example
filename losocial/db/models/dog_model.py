@@ -17,4 +17,3 @@ class DogModel(Base):
     owner_name: Mapped[str] = mapped_column(String(length=200))
     age: Mapped[int] = mapped_column(Integer)
     race: Mapped[DogRacesEnum] = mapped_column(Enum(DogRacesEnum))
-

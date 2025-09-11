@@ -1,4 +1,4 @@
-from typing import Any, Coroutine, List
+from typing import List
 
 from fastapi import Depends
 from sqlalchemy import select
@@ -18,11 +18,10 @@ class DogDAO:
         raw_dogs = await self.session.execute(
             select(DogModel).limit(limit).offset(offset),
         )
-        return list(raw_dogs.scalars().fetchall())
+        return list(raw_dogs.scalars().fetchall())  # type: ignore[return-value]
 
     async def create_dog_model(self, request: DogModelRequest) -> DogModel:
         dog = DogModel(**request.model_dump())
         self.session.add(dog)
         await self.session.flush()
         return dog
-

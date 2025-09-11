@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from losocial.web.api import dummy, echo, monitoring, users, dog
+from losocial.web.api import dog, dummy, echo, monitoring, users
 
 api_router = APIRouter()
 api_router.include_router(monitoring.router)
