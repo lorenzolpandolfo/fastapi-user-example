@@ -42,7 +42,7 @@ api-1  | INFO:     Application startup complete.
 ```
 E agora a API vai estar rodando na porta 8000.
 
-Acesse a [Documentação do Swagger](localhost:8000/api/docs)
+Acesse a [Documentação do Swagger](https://localhost:8000/api/docs)
 
 ---
 
