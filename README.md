@@ -50,7 +50,21 @@ Acesse a [Documentação do Swagger](https://localhost:8000/api/docs)
 
 Configurações feitas após o projeto gerado com o `fastapi-template`:
 
-- adicionado `exclude = ["^losocial/db/models/users.py$"]` no `[tool.mypy]` do arquivo `pyproject.toml`
+- adicionado no `[tool.mypy]` do arquivo `pyproject.toml` a regra:
+```
+  exclude = [
+    "^losocial/db/models/users.py$",
+    "^tests/$"
+]
+```
+- adicionado no `[tool.ruff]` do arquivo `pyproject.toml` a regra:
+```
+exclude = [
+    "losocial/db/migrations",
+    "tests/*",
+    ".venv/"
+]
+```
 - remoção da regra `D` (docstring) do `[tool.ruff.select]` no arquivo `pyproject.toml`
 - criação do `.env-example`
 - adicionada etapa de rodar testes no pre-commit
