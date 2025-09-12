@@ -25,3 +25,8 @@ class DogDAO:
         self.session.add(dog)
         await self.session.flush()
         return dog
+
+    async def save(self, dog: DogModel) -> DogModel:
+        self.session.add(dog)
+        await self.session.flush()
+        return dog

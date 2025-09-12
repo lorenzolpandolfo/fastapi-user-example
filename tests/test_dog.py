@@ -6,12 +6,28 @@ from starlette import status
 
 from losocial.db.dao.dog_dao import DogDAO
 from losocial.db.models.dog_model import DogModel
+from losocial.enums.dog_age_stages import DogAgeStagesEnum
 from losocial.enums.dog_races import DogRacesEnum
 from losocial.web.api.dog.request.dog_request import DogModelRequest
 from tests.conftest import (
     register_and_login_default_user,
     save_and_expect,
 )
+
+
+def create_dog(
+    name: str = "Rex",
+    age: int = 5,
+    race: DogRacesEnum = DogRacesEnum.SHIH_TZU,
+    owner_name: str = "Lorenzo",
+) -> DogModel:
+    return DogModel(
+        name=name,
+        age=age,
+        owner_name=owner_name,
+        race=race,
+        age_stage=DogAgeStagesEnum.PUPPY,
+    )
 
 
 @pytest.mark.anyio
@@ -84,20 +100,13 @@ async def test_get_dog(
 ) -> None:
     """Tests dog instance creation."""
     name = "dog"
-    age = 10
-    owner_name = "Lorenzo"
-    race = DogRacesEnum.POODLE
+
     url = fastapi_app.url_path_for("get_dogs")
     dog_dao = DogDAO(dbsession)
 
     token = await register_and_login_default_user(client)
 
-    dog = DogModel(
-        name=name,
-        age=age,
-        owner_name=owner_name,
-        race=race,
-    )
+    dog = create_dog(name=name)
 
     await save_and_expect(dog_dao, dog, 1)
 
@@ -119,19 +128,10 @@ async def test_get_dog_must_error_when_not_auth(
     dbsession: AsyncSession,
 ) -> None:
     """Tests dog instance creation."""
-    name = "dog"
-    age = 10
-    owner_name = "Lorenzo"
-    race = DogRacesEnum.POODLE
     url = fastapi_app.url_path_for("get_dogs")
     dog_dao = DogDAO(dbsession)
 
-    dog = DogModel(
-        name=name,
-        age=age,
-        owner_name=owner_name,
-        race=race,
-    )
+    dog = create_dog()
 
     await save_and_expect(dog_dao, dog, 1)
 
